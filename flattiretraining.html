@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Change a Flat Tire</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            animation: fadeIn 1s ease-in;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        .step {
+            margin: 20px 0;
+            padding: 15px;
+            background: #ddd;
+            border-left: 5px solid #007BFF;
+            transition: transform 0.3s ease-in-out;
+        }
+        .step:hover {
+            transform: scale(1.02);
+        }
+        .step img {
+            max-width: 100%;
+            display: block;
+            margin: auto;
+        }
+        .quiz {
+            margin-top: 20px;
+            padding: 20px;
+            background: #e3f2fd;
+        }
+        .footer {
+            text-align: center;
+            padding: 10px;
+            background: #333;
+            color: white;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>How to Change a Flat Tire</h1>
+        <p>Learn the step-by-step process of safely changing a flat tire.</p>
+        
+        <div class="step">
+            <h2>Step 1: Safety First</h2>
+            <p>Pull over safely, turn on hazard lights, apply parking brake, and use wheel wedges.</p>
+            <img src="safety_step.jpg" alt="Car pulled over safely">
+        </div>
+        
+        <div class="step">
+            <h2>Step 2: Gather Tools</h2>
+            <p>Spare tire, jack, lug wrench, car manual, gloves, and flashlight.</p>
+            <img src="tools_step.jpg" alt="Tire changing tools">
+        </div>
+        
+        <div class="step">
+            <h2>Step 3: Loosen Lug Nuts</h2>
+            <p>Use a lug wrench to loosen nuts before jacking up the car (turn counterclockwise).</p>
+            <img src="lug_nuts_step.jpg" alt="Loosening lug nuts">
+        </div>
+        
+        <div class="step">
+            <h2>Step 4: Jack Up the Car</h2>
+            <p>Locate the jack points, place the jack, and lift the car until the flat tire is off the ground.</p>
+            <img src="jack_step.jpg" alt="Car being jacked up">
+        </div>
+        
+        <div class="step">
+            <h2>Step 5: Remove Flat Tire & Install Spare</h2>
+            <p>Remove loosened lug nuts, take off the flat tire, align the spare, and hand-tighten the lug nuts.</p>
+            <img src="install_spare.jpg" alt="Replacing flat tire">
+        </div>
+        
+        <div class="step">
+            <h2>Step 6: Tighten Lug Nuts & Final Checks</h2>
+            <p>Lower the car and tighten the nuts in a crisscross pattern. Check tire pressure before driving.</p>
+            <img src="tighten_nuts.jpg" alt="Tightening lug nuts">
+        </div>
+        
+        <div class="quiz">
+            <h2>Quick Quiz</h2>
+            <p>What should you do first when you get a flat tire?</p>
+            <form id="quizForm">
+                <label><input type="radio" name="question" value="A"> A) Jack up the car</label><br>
+                <label><input type="radio" name="question" value="B"> B) Loosen the lug nuts</label><br>
+                <label><input type="radio" name="question" value="C"> C) Turn on hazard lights and pull over safely</label><br>
+                <label><input type="radio" name="question" value="D"> D) Call a tow truck</label><br><br>
+                <button type="button" onclick="checkAnswer()">Submit Answer</button>
+            </form>
+            <p id="quizResult"></p>
+        </div>
+        
+        <div class="step">
+            <h2>Video Tutorial</h2>
+            <p>Watch this short video demonstration on changing a flat tire.</p>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/TsWvsm3UYsk" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>&copy; 2025 | How to Change a Flat Tire Training</p>
+    </div>
+    
+    <script>
+        function checkAnswer() {
+            const answer = document.querySelector('input[name="question"]:checked');
+            const result = document.getElementById("quizResult");
+            if (answer) {
+                if (answer.value === "C") {
+                    result.innerHTML = "✅ Correct! Safety comes first.";
+                    result.style.color = "green";
+                } else {
+                    result.innerHTML = "❌ Incorrect. The first step is to turn on hazard lights and pull over safely.";
+                    result.style.color = "red";
+                }
+            } else {
+                result.innerHTML = "⚠️ Please select an answer.";
+                result.style.color = "orange";
+            }
+        }
+    </script>
+</body>
+</html>

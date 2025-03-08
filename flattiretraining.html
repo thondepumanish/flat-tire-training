@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Change a Flat Tire | Ultimate Guide</title>
+    <style>
+        :root {
+            --primary-color: #002F6C;
+            --secondary-color: #E57E25;
+            --accent-color: #FFD700;
+            --background-color: #D9E3F0;
+            --highlight-color: #4C9A2A;
+            --text-color: #333;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            animation: fadeIn 1s ease-in;
+        }
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            text-align: center;
+            position: relative;
+        }
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.8em;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        .step-container {
+            display: none;
+            padding: 20px;
+            background: var(--secondary-color);
+            color: white;
+            border-radius: 10px;
+            font-size: 1.3em;
+            position: relative;
+        }
+        .step-container.active {
+            display: block;
+        }
+        .step-container img {
+            max-width: 100%;
+            display: block;
+            margin: auto;
+            border-radius: 10px;
+        }
+        .jump-navigation {
+            margin-top: 20px;
+        }
+        .jump-navigation button {
+            margin: 5px;
+            padding: 10px;
+            background: var(--highlight-color);
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+        .jump-navigation button:hover {
+            background: var(--accent-color);
+        }
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: var(--accent-color);
+            border: none;
+            padding: 10px 15px;
+            font-size: 24px;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+        .nav-arrow:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        .prev {
+            left: 10px;
+        }
+        .next {
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>How to Change a Flat Tire</h1>
+        <p style="font-size: 1.4em;">Master the skill of changing a flat tire with this step-by-step guide.</p>
+        
+        <div class="jump-navigation">
+            <p>Jump to a step:</p>
+            <button onclick="showStep(1)">Step 1</button>
+            <button onclick="showStep(2)">Step 2</button>
+            <button onclick="showStep(3)">Step 3</button>
+            <button onclick="showStep(4)">Step 4</button>
+            <button onclick="showStep(5)">Step 5</button>
+            <button onclick="showStep(6)">Step 6</button>
+        </div>
+        
+        <div id="steps-container">
+            <button class="nav-arrow prev" onclick="prevStep()">&#10094;</button>
+            <div class="step-container active" id="step1">
+                <h2>Step 1: Safety First</h2>
+                <p>Pull over safely, turn on hazard lights, apply parking brake, and use wheel wedges.</p>
+                <img src="safety_step.jpg" alt="Car pulled over safely">
+            </div>
+            <div class="step-container" id="step2">
+                <h2>Step 2: Gather Tools</h2>
+                <p>Spare tire, jack, lug wrench, car manual, gloves, and flashlight.</p>
+                <img src="tools_step.jpg" alt="Tire changing tools">
+            </div>
+            <div class="step-container" id="step3">
+                <h2>Step 3: Loosen Lug Nuts</h2>
+                <p>Use a lug wrench to loosen the lug nuts before jacking up the car.</p>
+                <img src="lug_nuts_step.jpg" alt="Loosening lug nuts">
+            </div>
+            <div class="step-container" id="step4">
+                <h2>Step 4: Jack Up the Car</h2>
+                <p>Locate the jack points, place the jack, and lift the car until the flat tire is off the ground.</p>
+                <img src="jack_step.jpg" alt="Car being jacked up">
+            </div>
+            <div class="step-container" id="step5">
+                <h2>Step 5: Remove Flat Tire & Install Spare</h2>
+                <p>Remove loosened lug nuts, take off the flat tire, align the spare, and hand-tighten the lug nuts.</p>
+                <img src="install_spare.jpg" alt="Replacing flat tire">
+            </div>
+            <div class="step-container" id="step6">
+                <h2>Step 6: Tighten Lug Nuts & Final Checks</h2>
+                <p>Lower the car and tighten the nuts in a crisscross pattern.</p>
+                <img src="tighten_nuts.jpg" alt="Tightening lug nuts">
+            </div>
+            <button class="nav-arrow next" onclick="nextStep()">&#10095;</button>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        function showStep(step) {
+            document.querySelectorAll('.step-container').forEach(el => el.classList.remove('active'));
+            document.getElementById(`step${step}`).classList.add('active');
+            currentStep = step;
+        }
+        function nextStep() {
+            if (currentStep < 6) {
+                showStep(currentStep + 1);
+            }
+        }
+        function prevStep() {
+            if (currentStep > 1) {
+                showStep(currentStep - 1);
+            }
+        }
+    </script>
+</body>
+</html>

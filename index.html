@@ -9,101 +9,165 @@
             --primary-color: #002F6C;
             --secondary-color: #E57E25;
             --accent-color: #FFD700;
-            --background-color: #D9E3F0;
+            --background-color: #F4F7FC;
             --highlight-color: #4C9A2A;
-            --text-color: #333;
+            --text-color: #222;
         }
+
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: var(--background-color);
+            background: linear-gradient(to right, #dbeafe, #a5b4fc);
             color: var(--text-color);
-            animation: fadeIn 1s ease-in;
+            animation: fadeIn 1s ease-in-out;
         }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
         .container {
             width: 90%;
             max-width: 900px;
             margin: 50px auto;
-            padding: 20px;
+            padding: 30px;
             background: white;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
             text-align: center;
-            position: relative;
         }
+
         h1 {
             color: var(--primary-color);
-            font-size: 2.8em;
-            font-weight: bold;
+            font-size: 2.5em;
+            font-weight: 700;
             text-transform: uppercase;
             margin-bottom: 20px;
         }
+
         .step-container {
             display: none;
             padding: 20px;
             background: var(--secondary-color);
             color: white;
-            border-radius: 10px;
-            font-size: 1.3em;
-            position: relative;
+            border-radius: 12px;
+            font-size: 1.2em;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
+
         .step-container.active {
             display: block;
+            animation: fadeInStep 0.5s ease-in-out;
         }
+
+        @keyframes fadeInStep {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .step-container img {
-            max-width: 100%;
-            display: block;
-            margin: auto;
-            border-radius: 10px;
+            width: 100%;
+            max-height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-top: 15px;
         }
+
         .jump-navigation {
             margin-top: 20px;
         }
+
         .jump-navigation button {
             margin: 5px;
-            padding: 10px;
+            padding: 12px 18px;
             background: var(--highlight-color);
             border: none;
             color: white;
             font-size: 16px;
+            font-weight: bold;
             cursor: pointer;
             border-radius: 8px;
+            transition: 0.3s ease-in-out;
         }
+
         .jump-navigation button:hover {
             background: var(--accent-color);
+            transform: scale(1.05);
         }
+
         .nav-arrow {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
             background-color: var(--accent-color);
             border: none;
-            padding: 10px 15px;
+            padding: 12px 16px;
             font-size: 24px;
             cursor: pointer;
             border-radius: 50%;
-            transition: background 0.3s;
+            transition: 0.3s ease-in-out;
         }
+
         .nav-arrow:hover {
             background-color: var(--primary-color);
             color: white;
+            transform: scale(1.1);
         }
-        .prev {
-            left: 10px;
+
+        .prev { left: 10px; }
+        .next { right: 10px; }
+
+        .video-container, .quiz {
+            margin-top: 30px;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
         }
-        .next {
-            right: 10px;
+
+        iframe {
+            border-radius: 10px;
+        }
+
+        .quiz form {
+            text-align: left;
+            font-size: 1.2em;
+        }
+
+        .quiz button {
+            margin-top: 10px;
+            padding: 10px 15px;
+            font-size: 18px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s ease-in-out;
+        }
+
+        .quiz button:hover {
+            background: var(--highlight-color);
+            transform: scale(1.05);
+        }
+
+        #quiz-result {
+            font-weight: bold;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
+
     <div class="container">
         <h1>How to Change a Flat Tire</h1>
-        <p style="font-size: 1.4em;">Master the skill of changing a flat tire with this step-by-step guide.</p>
-        
+        <p style="font-size: 1.3em;">Master the skill of changing a flat tire with this step-by-step guide.</p>
+
         <div class="jump-navigation">
-            <p>Jump to a step:</p>
+            <p><strong>Jump to a step:</strong></p>
             <button onclick="showStep(1)">Step 1</button>
             <button onclick="showStep(2)">Step 2</button>
             <button onclick="showStep(3)">Step 3</button>
@@ -111,60 +175,116 @@
             <button onclick="showStep(5)">Step 5</button>
             <button onclick="showStep(6)">Step 6</button>
         </div>
-        
+
         <div id="steps-container">
             <button class="nav-arrow prev" onclick="prevStep()">&#10094;</button>
+
             <div class="step-container active" id="step1">
                 <h2>Step 1: Safety First</h2>
                 <p>Pull over safely, turn on hazard lights, apply parking brake, and use wheel wedges.</p>
-                <img src="safety_step.jpg" alt="Car pulled over safely">
+                <img src="safety_step.jpg" alt="Safety First">
             </div>
+
             <div class="step-container" id="step2">
                 <h2>Step 2: Gather Tools</h2>
                 <p>Spare tire, jack, lug wrench, car manual, gloves, and flashlight.</p>
-                <img src="tools_step.jpg" alt="Tire changing tools">
+                <img src="tools_step.jpg" alt="Gather Tools">
             </div>
+
             <div class="step-container" id="step3">
                 <h2>Step 3: Loosen Lug Nuts</h2>
                 <p>Use a lug wrench to loosen the lug nuts before jacking up the car.</p>
-                <img src="lug_nuts_step.jpg" alt="Loosening lug nuts">
+                <img src="lug_nuts_step.jpg" alt="Loosen Lug Nuts">
             </div>
+
             <div class="step-container" id="step4">
                 <h2>Step 4: Jack Up the Car</h2>
-                <p>Locate the jack points, place the jack, and lift the car until the flat tire is off the ground.</p>
-                <img src="jack_step.jpg" alt="Car being jacked up">
+                <p>Position the jack under the vehicle’s frame and lift the car until the flat tire is off the ground.</p>
+                <img src="jack_step.jpg" alt="Jack Up the Car">
             </div>
+
             <div class="step-container" id="step5">
-                <h2>Step 5: Remove Flat Tire & Install Spare</h2>
-                <p>Remove loosened lug nuts, take off the flat tire, align the spare, and hand-tighten the lug nuts.</p>
-                <img src="install_spare.jpg" alt="Replacing flat tire">
+                <h2>Step 5: Remove and Replace the Tire</h2>
+                <p>Completely remove the lug nuts, take off the flat tire, and replace it with the spare.</p>
+                <img src="install_spare.jpg" alt="Replace the Tire">
             </div>
+
             <div class="step-container" id="step6">
-                <h2>Step 6: Tighten Lug Nuts & Final Checks</h2>
-                <p>Lower the car and tighten the nuts in a crisscross pattern.</p>
-                <img src="tighten_nuts.jpg" alt="Tightening lug nuts">
+                <h2>Step 6: Tighten Lug Nuts and Lower the Car</h2>
+                <p>Tighten the lug nuts in a crisscross pattern, lower the car, and ensure all nuts are secure.</p>
+                <img src="tighten_nuts.jpg" alt="Tighten Lug Nuts">
             </div>
+
             <button class="nav-arrow next" onclick="nextStep()">&#10095;</button>
         </div>
+
+        <script>
+            let currentStep = 1;
+            function showStep(step) {
+                document.querySelectorAll('.step-container').forEach(el => el.classList.remove('active'));
+                document.getElementById(`step${step}`).classList.add('active');
+                currentStep = step;
+            }
+            function nextStep() { if (currentStep < 6) showStep(currentStep + 1); }
+            function prevStep() { if (currentStep > 1) showStep(currentStep - 1); }
+        </script>
+
+    </div>
+<div class="container">
+        <h1>How to Change a Flat Tire</h1>
+        <p style="font-size: 1.3em;">Master the skill of changing a flat tire with this step-by-step guide.</p>
+
+        <div class="video-container">
+            <h2>Watch a Tutorial</h2>
+            <p>Follow along with this video to learn how to change a flat tire.</p>
+            <iframe width="100%" height="315" 
+                src="https://www.youtube.com/embed/YOUR_VIDEO_ID" 
+                title="How to Change a Flat Tire" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+            </iframe>
+        </div>
+
+        <div class="quiz">
+            <h2>Test Your Knowledge</h2>
+            <p>Answer the following question to check your understanding.</p>
+
+            <form id="quiz-form">
+                <p><strong>What is the first step when changing a flat tire?</strong></p>
+                <label><input type="radio" name="question1" value="a"> A) Loosen the lug nuts</label><br>
+                <label><input type="radio" name="question1" value="b"> B) Pull over safely and turn on hazard lights</label><br>
+                <label><input type="radio" name="question1" value="c"> C) Jack up the car</label><br>
+                <label><input type="radio" name="question1" value="d"> D) Remove the flat tire</label><br>
+
+                <button type="button" onclick="checkQuiz()">Submit</button>
+            </form>
+
+            <p id="quiz-result"></p>
+        </div>
+
+        <script>
+            function checkQuiz() {
+                let answer = document.querySelector('input[name="question1"]:checked');
+                let resultText = document.getElementById("quiz-result");
+
+                if (!answer) {
+                    resultText.innerHTML = "Please select an answer.";
+                    resultText.style.color = "red";
+                    return;
+                }
+
+                if (answer.value === "b") {
+                    resultText.innerHTML = "Correct! Safety first is the most important step.";
+                    resultText.style.color = "green";
+                } else {
+                    resultText.innerHTML = "Incorrect. The first step is to pull over safely and turn on hazard lights.";
+                    resultText.style.color = "red";
+                }
+            }
+        </script>
+
     </div>
 
-    <script>
-        let currentStep = 1;
-        function showStep(step) {
-            document.querySelectorAll('.step-container').forEach(el => el.classList.remove('active'));
-            document.getElementById(`step${step}`).classList.add('active');
-            currentStep = step;
-        }
-        function nextStep() {
-            if (currentStep < 6) {
-                showStep(currentStep + 1);
-            }
-        }
-        function prevStep() {
-            if (currentStep > 1) {
-                showStep(currentStep - 1);
-            }
-        }
-    </script>
 </body>
 </html>

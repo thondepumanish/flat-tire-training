@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>How to Change a Flat Tire | Training Presentation</title>
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Change a Flat Tire | Training and Quiz</title>
     <style>
         :root {
             --primary-color: #002F6C;
@@ -12,6 +12,8 @@
             --background-color: #F4F7FC;
             --highlight-color: #4C9A2A;
             --text-color: #222;
+            --error-color: #d9534f;
+            --success-color: #5cb85c;
         }
 
         body {
@@ -188,23 +190,223 @@
             background: var(--primary-color);
         }
 
-        .presenter-notes {
-            background: #fff8dc;
-            border: 1px dashed #ccc;
-            padding: 10px;
+        
+
+        /* Quiz styles */
+        .quiz-separator {
+            margin: 50px 0;
+            border-top: 3px dashed var(--secondary-color);
+            position: relative;
+        }
+
+        .quiz-separator:before {
+            content: "Test Your Knowledge";
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 0 20px;
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .quiz-container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 30px;
+            background: white;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .quiz-header {
+            padding: 15px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .question-container {
+            display: none;
+            padding: 20px;
+            background: var(--background-color);
+            border: 2px solid var(--secondary-color);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            animation: fadeInQuestion 0.5s ease-in-out;
+        }
+
+        @keyframes fadeInQuestion {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-container.active {
+            display: block;
+        }
+
+        .question {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option {
+            padding: 12px;
+            background: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .option:hover {
+            background: #e0e0e0;
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .option.correct {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .option.incorrect {
+            background: var(--error-color);
+            color: white;
+        }
+
+        .feedback {
             margin-top: 15px;
-            text-align: left;
-            font-style: italic;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: rgba(92, 184, 92, 0.2);
+            border: 1px solid var(--success-color);
+            color: var(--success-color);
+        }
+
+        .feedback.incorrect {
+            background: rgba(217, 83, 79, 0.2);
+            border: 1px solid var(--error-color);
+            color: var(--error-color);
+        }
+
+        .next-btn {
+            display: none;
+            padding: 12px 20px;
+            background: var(--highlight-color);
+            border: none;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 8px;
+            margin-top: 15px;
+            transition: 0.3s ease-in-out;
+        }
+
+        .next-btn:hover {
+            background: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        .quiz-progress-container {
+            margin-bottom: 20px;
+        }
+
+        .quiz-progress-bar {
+            height: 10px;
+            background: #ddd;
+            border-radius: 5px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .quiz-progress {
+            height: 100%;
+            background: var(--secondary-color);
+            border-radius: 5px;
+            width: 0%;
+            transition: width 0.5s ease-in-out;
+        }
+
+        .progress-text {
+            text-align: center;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .score-container {
+            display: none;
+            padding: 20px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 12px;
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .score-title {
+            font-size: 1.8em;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+        }
+
+        .score {
+            font-size: 3em;
+            margin: 15px 0;
+        }
+
+        .score-message {
+            margin: 15px 0;
+        }
+
+        .restart-btn {
+            padding: 12px 20px;
+            background: var(--secondary-color);
+            border: none;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 8px;
+            margin-top: 15px;
+            transition: 0.3s ease-in-out;
+        }
+
+        .restart-btn:hover {
+            background: var(--highlight-color);
+            transform: scale(1.05);
         }
 
         @media (max-width: 768px) {
-            .container {
+            .container, .quiz-container {
                 width: 95%;
                 padding: 15px;
             }
             
             h1 {
-                font-size: 2em;
+                font-size: 1.8em;
             }
         }
     </style>
@@ -229,9 +431,7 @@
                 <li>Help you assist others in need</li>
             </ul>
             <p>This presentation will guide you through 6 simple steps to successfully change a flat tire.</p>
-            <div class="presenter-notes">
-                <p><strong>Presenter Notes:</strong> Introduce yourself, ask who has changed a tire before, mention how common flat tires are (approximately 220 million flat tires occur annually in the US alone).</p>
-            </div>
+            
         </div>
 
         <div id="steps-container">
@@ -249,9 +449,7 @@
                     <p class="safety-tips">Never change a tire on a slope or soft ground. If you're on a busy road and it's unsafe, call for roadside assistance.</p>
                 </div>
                 <img src="safety_step.jpg" alt="Safety First">
-                <div class="presenter-notes">
-                    <p><strong>Presenter Notes:</strong> Emphasize that no tire is worth risking your safety. Share a brief personal experience if you have one. Demonstrate proper hazard light location.</p>
-                </div>
+                
             </div>
 
             <div class="step-container" id="step2">
@@ -270,9 +468,7 @@
                     <p>Most vehicles store these tools in the trunk, often under the carpet near the spare tire. Familiarize yourself with your vehicle's tool location before you need them.</p>
                 </div>
                 <img src="tools_step.jpg" alt="Gather Tools">
-                <div class="presenter-notes">
-                    <p><strong>Presenter Notes:</strong> Hold up each tool if you have physical examples. Mention that some newer cars don't include spare tires but may have repair kits instead.</p>
-                </div>
+            
             </div>
 
             <div class="step-container" id="step3">
@@ -289,9 +485,7 @@
                     <p>Always loosen lug nuts while the car is still on the ground. This provides the necessary resistance to break the tight seal.</p>
                 </div>
                 <img src="lug_nuts_step.jpg" alt="Loosen Lug Nuts">
-                <div class="presenter-notes">
-                    <p><strong>Presenter Notes:</strong> Demonstrate proper body positioning for maximum leverage. Note that some lug nuts may have special locks requiring an adapter.</p>
-                </div>
+                
             </div>
 
             <div class="step-container" id="step4">
@@ -308,9 +502,7 @@
                     <p class="safety-tips">Never place any part of your body underneath the vehicle while it's supported only by a jack. The vehicle should be raised just enough to remove and replace the tire.</p>
                 </div>
                 <img src="jack_step.jpg" alt="Jack Up the Car">
-                <div class="presenter-notes">
-                    <p><strong>Presenter Notes:</strong> Emphasize the importance of finding the correct jacking point - using the wrong spot can damage the vehicle or cause the jack to slip.</p>
-                </div>
+         
             </div>
 
             <div class="step-container" id="step5">
@@ -328,9 +520,7 @@
                     <p>When mounting the spare tire, align it carefully with the wheel studs to avoid cross-threading the lug nuts. The spare tire should sit flush against the hub.</p>
                 </div>
                 <img src="install_spare.jpg" alt="Replace the Tire">
-                <div class="presenter-notes">
-                    <p><strong>Presenter Notes:</strong> Demonstrate how heavy a tire can be and proper lifting technique. Note that temporary spare tires ("donuts") have speed and distance limitations.</p>
-                </div>
+                
             </div>
 
             <div class="step-container" id="step6">
@@ -348,9 +538,7 @@
                     <p>Tightening in a crisscross pattern ensures even pressure. After driving about 50 miles, recheck the lug nuts to ensure they haven't loosened.</p>
                 </div>
                 <img src="tighten_nuts.jpg" alt="Tighten Lug Nuts">
-                <div class="presenter-notes">
-                    <p><strong>Presenter Notes:</strong> Illustrate the crisscross pattern on a diagram or with hand motions. Remind participants to have their tire repaired or replaced as soon as possible.</p>
-                </div>
+                
             </div>
 
             <div class="tips-section" id="conclusion">
@@ -369,9 +557,7 @@
                 </ul>
                 <p><strong>Remember:</strong> Changing a tire safely is much more important than changing it quickly. Take your time and follow each step carefully.</p>
                 <p>Any questions?</p>
-                <div class="presenter-notes">
-                    <p><strong>Presenter Notes:</strong> Summarize the main points, invite questions, and if time permits, mention or demonstrate how to check if a tire needs replacement (tread depth check with a penny).</p>
-                </div>
+                
             </div>
         </div>
 
@@ -379,6 +565,111 @@
             <button class="control-button" id="prev-btn" onclick="prevSlide()" disabled>Previous</button>
             <button class="control-button fullscreen-btn" id="fullscreen-btn" onclick="toggleFullscreen()">Fullscreen</button>
             <button class="control-button" id="next-btn" onclick="nextSlide()">Next</button>
+        </div>
+    </div>
+
+	 <!-- QUIZ SECTION -->
+	<div class="quiz-container">
+        <h1>Test Your Tire Changing Knowledge</h1>
+        
+        <div class="quiz-header">
+            <p>Answer each question about the tire changing process. After answering, you'll get feedback and can move to the next question.</p>
+        </div>
+        
+        <div class="progress-container">
+            <div class="progress-text" id="progress-text">Question 1 of 6</div>
+            <div class="progress-bar">
+                <div class="progress" id="progress-bar"></div>
+            </div>
+        </div>
+        
+        <div id="questions-container">
+            <!-- Question 1 -->
+            <div class="question-container active" id="question1">
+                <div class="question">What should be your first priority when you notice a flat tire?</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 1, true)">Ensuring your safety and the safety of others</div>
+                    <div class="option" onclick="selectOption(this, 1, false)">Quickly removing the flat tire</div>
+                    <div class="option" onclick="selectOption(this, 1, false)">Calling for roadside assistance</div>
+                    <div class="option" onclick="selectOption(this, 1, false)">Finding the spare tire</div>
+                </div>
+                <div class="feedback" id="feedback1"></div>
+                <button class="next-btn" id="next1" onclick="nextQuestion(1)">Next Question</button>
+            </div>
+            
+            <!-- Question 2 -->
+            <div class="question-container" id="question2">
+                <div class="question">When should you loosen the lug nuts on a flat tire?</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 2, false)">After jacking up the car</div>
+                    <div class="option" onclick="selectOption(this, 2, true)">Before jacking up the car, while it's still on the ground</div>
+                    <div class="option" onclick="selectOption(this, 2, false)">Only when you're ready to remove the tire</div>
+                    <div class="option" onclick="selectOption(this, 2, false)">It doesn't matter when you loosen them</div>
+                </div>
+                <div class="feedback" id="feedback2"></div>
+                <button class="next-btn" id="next2" onclick="nextQuestion(2)">Next Question</button>
+            </div>
+            
+            <!-- Question 3 -->
+            <div class="question-container" id="question3">
+                <div class="question">Where should you position the jack when lifting your car?</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 3, false)">Under the bumper</div>
+                    <div class="option" onclick="selectOption(this, 3, false)">Near the flat tire, anywhere is fine</div>
+                    <div class="option" onclick="selectOption(this, 3, true)">At the proper jacking point specified in your owner's manual</div>
+                    <div class="option" onclick="selectOption(this, 3, false)">Under the door</div>
+                </div>
+                <div class="feedback" id="feedback3"></div>
+                <button class="next-btn" id="next3" onclick="nextQuestion(3)">Next Question</button>
+            </div>
+            
+            <!-- Question 4 -->
+            <div class="question-container" id="question4">
+                <div class="question">How high should you jack up the car when changing a tire?</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 4, false)">As high as the jack will go</div>
+                    <div class="option" onclick="selectOption(this, 4, true)">Just enough to get the flat tire about 6 inches off the ground</div>
+                    <div class="option" onclick="selectOption(this, 4, false)">About 1 foot off the ground</div>
+                    <div class="option" onclick="selectOption(this, 4, false)">Just enough so the tire barely clears the ground</div>
+                </div>
+                <div class="feedback" id="feedback4"></div>
+                <button class="next-btn" id="next4" onclick="nextQuestion(4)">Next Question</button>
+            </div>
+            
+            <!-- Question 5 -->
+            <div class="question-container" id="question5">
+                <div class="question">What is the correct way to tighten lug nuts when installing a tire?</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 5, false)">In clockwise order, one after the other</div>
+                    <div class="option" onclick="selectOption(this, 5, false)">In any order, as long as they're tight</div>
+                    <div class="option" onclick="selectOption(this, 5, true)">In a star or crisscross pattern</div>
+                    <div class="option" onclick="selectOption(this, 5, false)">Tighten one completely before moving to the next</div>
+                </div>
+                <div class="feedback" id="feedback5"></div>
+                <button class="next-btn" id="next5" onclick="nextQuestion(5)">Next Question</button>
+            </div>
+            
+            <!-- Question 6 -->
+            <div class="question-container" id="question6">
+                <div class="question">What limitations typically apply to a temporary "donut" spare tire?</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 6, false)">Maximum speed of 70 mph, maximum distance of 100 miles</div>
+                    <div class="option" onclick="selectOption(this, 6, true)">Maximum speed of 50 mph, maximum distance of 50-70 miles</div>
+                    <div class="option" onclick="selectOption(this, 6, false)">No limitations, just like a regular tire</div>
+                    <div class="option" onclick="selectOption(this, 6, false)">Can only be used on highways</div>
+                </div>
+                <div class="feedback" id="feedback6"></div>
+                <button class="next-btn" id="next6" onclick="showResults()">See Results</button>
+            </div>
+        </div>
+        
+        <!-- Results Screen -->
+        <div class="score-container" id="score-container">
+            <div class="score-title">Quiz Complete!</div>
+            <p>You scored:</p>
+            <div class="score" id="final-score">0/6</div>
+            <div class="score-message" id="score-message"></div>
+            <button class="restart-btn" onclick="restartQuiz()">Take Quiz Again</button>
         </div>
     </div>
 
@@ -470,6 +761,165 @@
                 togglePresenterNotes();
             }
         });
+	
+	let currentQuestion = 1;
+        let score = 0;
+        const totalQuestions = 6;
+        
+        // Feedback messages
+        const feedbackMessages = {
+            1: {
+                correct: "Correct! Safety is always the top priority when changing a flat tire. Make sure you're in a safe location, away from traffic.",
+                incorrect: "Incorrect. While the other options are important, ensuring your safety is the first priority when you notice a flat tire."
+            },
+            2: {
+                correct: "Correct! You should always loosen the lug nuts while the car is still on the ground. This provides the necessary resistance to break the tight seal.",
+                incorrect: "Incorrect. The lug nuts should be loosened before jacking up the car, while the tire is still on the ground to provide resistance."
+            },
+            3: {
+                correct: "Correct! Always place the jack at the proper jacking point specified in your owner's manual to prevent damage to your vehicle.",
+                incorrect: "Incorrect. Using an improper jacking point can damage your vehicle or cause the jack to slip. Check your owner's manual for the correct location."
+            },
+            4: {
+                correct: "Correct! You only need to raise the car about 6 inches off the ground - just enough to remove and replace the tire.",
+                incorrect: "Incorrect. The vehicle should be raised just enough (about 6 inches) to remove and replace the tire. Lifting it higher than necessary can be dangerous."
+            },
+            5: {
+                correct: "Correct! Tightening in a star or crisscross pattern ensures even pressure and prevents warping of the brake rotor.",
+                incorrect: "Incorrect. Lug nuts should be tightened in a star or crisscross pattern (like tightening a lid) to ensure even pressure."
+            },
+            6: {
+                correct: "Correct! Temporary spare tires are typically limited to 50 mph and should not be driven for more than 50-70 miles.",
+                incorrect: "Incorrect. Temporary 'donut' spare tires usually have a maximum speed of 50 mph and should not be driven for more than 50-70 miles."
+            }
+        };
+
+        // Function to select an option
+        function selectOption(element, questionNumber, isCorrect) {
+            // Don't allow selection if feedback is already shown
+            if (document.getElementById(`feedback${questionNumber}`).style.display === 'block') {
+                return;
+            }
+            
+            // Remove previous selections
+            const options = document.querySelectorAll(`#question${questionNumber} .option`);
+            options.forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Mark the selected option
+            element.classList.add('selected');
+            
+            // Show feedback
+            const feedbackEl = document.getElementById(`feedback${questionNumber}`);
+            if (isCorrect) {
+                element.classList.add('correct');
+                feedbackEl.classList.add('correct');
+                feedbackEl.classList.remove('incorrect');
+                feedbackEl.innerHTML = feedbackMessages[questionNumber].correct;
+                score++;
+            } else {
+                element.classList.add('incorrect');
+                feedbackEl.classList.add('incorrect');
+                feedbackEl.classList.remove('correct');
+                feedbackEl.innerHTML = feedbackMessages[questionNumber].incorrect;
+                
+                // Show which option was correct
+                options.forEach(option => {
+                    if (option.onclick.toString().includes('true')) {
+                        option.classList.add('correct');
+                    }
+                });
+            }
+            
+            feedbackEl.style.display = 'block';
+            document.getElementById(`next${questionNumber}`).style.display = 'block';
+        }
+
+        // Function to move to the next question
+        function nextQuestion(currentNum) {
+            // Hide current question
+            document.getElementById(`question${currentNum}`).classList.remove('active');
+            
+            // Show next question
+            const nextNum = currentNum + 1;
+            document.getElementById(`question${nextNum}`).classList.add('active');
+            
+            // Update progress
+            currentQuestion = nextNum;
+            updateProgress();
+        }
+
+        // Function to update progress bar
+        function updateProgress() {
+            const progressPercentage = (currentQuestion / totalQuestions) * 100;
+            document.getElementById('progress-bar').style.width = `${progressPercentage}%`;
+            document.getElementById('progress-text').textContent = `Question ${currentQuestion} of ${totalQuestions}`;
+        }
+
+        // Function to display results
+        function showResults() {
+            // Hide questions
+            document.getElementById(`question${currentQuestion}`).classList.remove('active');
+            
+            // Update score
+            document.getElementById('final-score').textContent = `${score}/${totalQuestions}`;
+            
+            // Show appropriate message based on score
+            const messageEl = document.getElementById('score-message');
+            if (score === totalQuestions) {
+                messageEl.textContent = "Perfect! You're a tire-changing expert!";
+            } else if (score >= 4) {
+                messageEl.textContent = "Great job! You're well-prepared to handle a flat tire.";
+            } else if (score >= 2) {
+                messageEl.textContent = "Good effort! Review the steps again to become more confident in changing tires.";
+            } else {
+                messageEl.textContent = "It might be helpful to review the tire-changing steps again to ensure you're prepared for a roadside emergency.";
+            }
+            
+            // Show score container
+            document.getElementById('score-container').style.display = 'block';
+        }
+
+        // Function to restart the quiz
+        function restartQuiz() {
+            // Reset score
+            score = 0;
+            currentQuestion = 1;
+            
+            // Hide results
+            document.getElementById('score-container').style.display = 'none';
+            
+            // Reset all questions
+            for (let i = 1; i <= totalQuestions; i++) {
+                // Reset options
+                const options = document.querySelectorAll(`#question${i} .option`);
+                options.forEach(option => {
+                    option.classList.remove('selected', 'correct', 'incorrect');
+                });
+                
+                // Hide feedback and next button
+                document.getElementById(`feedback${i}`).style.display = 'none';
+                document.getElementById(`next${i}`).style.display = 'none';
+                
+                // Hide question
+                document.getElementById(`question${i}`).classList.remove('active');
+            }
+            
+            // Show first question
+            document.getElementById('question1').classList.add('active');
+            
+            // Reset progress
+            updateProgress();
+        }
+
+        // Initialize the quiz
+        function initQuiz() {
+            updateProgress();
+        }
+
+        // Call init function when page loads
+        window.onload = initQuiz;
     </script>
 </body>
 </html>

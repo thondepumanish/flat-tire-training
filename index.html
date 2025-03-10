@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>How to Change a Flat Tire | Ultimate Guide</title>
+    <title>How to Change a Flat Tire | Training Presentation</title>
     <style>
         :root {
             --primary-color: #002F6C;
@@ -30,8 +30,8 @@
 
         .container {
             width: 90%;
-            max-width: 900px;
-            margin: 50px auto;
+            max-width: 1000px;
+            margin: 20px auto;
             padding: 30px;
             background: white;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
@@ -47,15 +47,30 @@
             margin-bottom: 20px;
         }
 
+        .intro {
+            padding: 20px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .intro h2 {
+            color: var(--accent-color);
+        }
+
         .step-container {
             display: none;
             padding: 20px;
-            background: var(--secondary-color);
-            color: white;
+            background: var(--background-color);
+            border: 2px solid var(--secondary-color);
+            color: var(--text-color);
             border-radius: 12px;
             font-size: 1.2em;
-            text-align: center;
+            text-align: left;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
         }
 
         .step-container.active {
@@ -75,14 +90,33 @@
             border-radius: 8px;
             margin-top: 15px;
         }
-
-        .jump-navigation {
-            margin-top: 20px;
+        
+        .step-container h2 {
+            color: var(--secondary-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
         }
 
-        .jump-navigation button {
-            margin: 5px;
-            padding: 12px 18px;
+        .step-container .key-points {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .step-container .key-points h3 {
+            color: var(--highlight-color);
+            margin-top: 0;
+        }
+
+        .navigation-controls {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+
+        .control-button {
+            padding: 12px 20px;
             background: var(--highlight-color);
             border: none;
             color: white;
@@ -93,70 +127,85 @@
             transition: 0.3s ease-in-out;
         }
 
-        .jump-navigation button:hover {
-            background: var(--accent-color);
+        .control-button:hover {
+            background: var(--secondary-color);
             transform: scale(1.05);
         }
 
-        .nav-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: var(--accent-color);
-            border: none;
-            padding: 12px 16px;
-            font-size: 24px;
-            cursor: pointer;
-            border-radius: 50%;
-            transition: 0.3s ease-in-out;
+        .control-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
         }
 
-        .nav-arrow:hover {
-            background-color: var(--primary-color);
-            color: white;
-            transform: scale(1.1);
+        .progress-bar {
+            height: 10px;
+            background: #ddd;
+            border-radius: 5px;
+            margin: 20px 0;
+            position: relative;
         }
 
-        .prev { left: 10px; }
-        .next { right: 10px; }
+        .progress {
+            height: 100%;
+            background: var(--secondary-color);
+            border-radius: 5px;
+            width: 16.66%; /* Start with 1/6 for step 1 */
+            transition: width 0.5s ease-in-out;
+        }
 
-        .video-container, .quiz {
-            margin-top: 30px;
+        .slide-indicator {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .tips-section {
+            background: #f9f9f9;
             padding: 20px;
-            background: white;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-            border-radius: 12px;
-        }
-
-        iframe {
             border-radius: 10px;
-        }
-
-        .quiz form {
+            margin-top: 20px;
             text-align: left;
-            font-size: 1.2em;
         }
 
-        .quiz button {
-            margin-top: 10px;
-            padding: 10px 15px;
-            font-size: 18px;
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.3s ease-in-out;
+        .tips-section h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
         }
 
-        .quiz button:hover {
-            background: var(--highlight-color);
-            transform: scale(1.05);
-        }
-
-        #quiz-result {
+        .safety-tips {
+            color: #d9534f;
             font-weight: bold;
-            margin-top: 10px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .fullscreen-btn {
+            margin-right: 10px;
+            background: var(--primary-color);
+        }
+
+        .presenter-notes {
+            background: #fff8dc;
+            border: 1px dashed #ccc;
+            padding: 10px;
+            margin-top: 15px;
+            text-align: left;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
         }
     </style>
 </head>
@@ -164,127 +213,264 @@
 
     <div class="container">
         <h1>How to Change a Flat Tire</h1>
-        <p style="font-size: 1.3em;">Master the skill of changing a flat tire with this step-by-step guide.</p>
+        <div class="slide-indicator" id="slide-indicator">Slide 1 of 7</div>
+        
+        <div class="progress-bar">
+            <div class="progress" id="progress-bar"></div>
+        </div>
 
-        <div class="jump-navigation">
-            <p><strong>Jump to a step:</strong></p>
-            <button onclick="showStep(1)">Step 1</button>
-            <button onclick="showStep(2)">Step 2</button>
-            <button onclick="showStep(3)">Step 3</button>
-            <button onclick="showStep(4)">Step 4</button>
-            <button onclick="showStep(5)">Step 5</button>
-            <button onclick="showStep(6)">Step 6</button>
+        <div class="intro active" id="intro">
+            
+            <p>Knowing how to change a flat tire is an important skill that can:</p>
+            <ul>
+                <li>Save you time and money in emergency situations</li>
+                <li>Keep you safe when stranded</li>
+                <li>Give you confidence on the road</li>
+                <li>Help you assist others in need</li>
+            </ul>
+            <p>This presentation will guide you through 6 simple steps to successfully change a flat tire.</p>
+            <div class="presenter-notes">
+                <p><strong>Presenter Notes:</strong> Introduce yourself, ask who has changed a tire before, mention how common flat tires are (approximately 220 million flat tires occur annually in the US alone).</p>
+            </div>
         </div>
 
         <div id="steps-container">
-            <button class="nav-arrow prev" onclick="prevStep()">&#10094;</button>
-
-            <div class="step-container active" id="step1">
+            <div class="step-container" id="step1">
                 <h2>Step 1: Safety First</h2>
-                <p>Pull over safely, turn on hazard lights, apply parking brake, and use wheel wedges.</p>
+                <p>When you notice a flat tire, your first priority is ensuring your safety and the safety of others.</p>
+                <ul>
+                    <li>Pull over to a safe, flat location away from traffic</li>
+                    <li>Turn on your hazard lights to alert other drivers</li>
+                    <li>Apply the parking brake to prevent the vehicle from rolling</li>
+                    <li>Place wheel wedges (if available) on the opposite side of the flat</li>
+                </ul>
+                <div class="key-points">
+                    <h3>Key Points:</h3>
+                    <p class="safety-tips">Never change a tire on a slope or soft ground. If you're on a busy road and it's unsafe, call for roadside assistance.</p>
+                </div>
                 <img src="safety_step.jpg" alt="Safety First">
+                <div class="presenter-notes">
+                    <p><strong>Presenter Notes:</strong> Emphasize that no tire is worth risking your safety. Share a brief personal experience if you have one. Demonstrate proper hazard light location.</p>
+                </div>
             </div>
 
             <div class="step-container" id="step2">
-                <h2>Step 2: Gather Tools</h2>
-                <p>Spare tire, jack, lug wrench, car manual, gloves, and flashlight.</p>
+                <h2>Step 2: Gather Your Tools</h2>
+                <p>Before you begin, ensure you have all the necessary tools:</p>
+                <ul>
+                    <li>Spare tire (check that it's properly inflated)</li>
+                    <li>Jack (vehicle lifting device)</li>
+                    <li>Lug wrench (to remove and tighten lug nuts)</li>
+                    <li>Vehicle owner's manual (for jack placement info)</li>
+                    <li>Gloves (optional but recommended)</li>
+                    <li>Flashlight (if changing tire at night)</li>
+                </ul>
+                <div class="key-points">
+                    <h3>Key Points:</h3>
+                    <p>Most vehicles store these tools in the trunk, often under the carpet near the spare tire. Familiarize yourself with your vehicle's tool location before you need them.</p>
+                </div>
                 <img src="tools_step.jpg" alt="Gather Tools">
+                <div class="presenter-notes">
+                    <p><strong>Presenter Notes:</strong> Hold up each tool if you have physical examples. Mention that some newer cars don't include spare tires but may have repair kits instead.</p>
+                </div>
             </div>
 
             <div class="step-container" id="step3">
-                <h2>Step 3: Loosen Lug Nuts</h2>
-                <p>Use a lug wrench to loosen the lug nuts before jacking up the car.</p>
+                <h2>Step 3: Loosen the Lug Nuts</h2>
+                <p>Before jacking up the car, you need to loosen (but not remove) the lug nuts.</p>
+                <ul>
+                    <li>Remove any hubcap or wheel cover if present</li>
+                    <li>Use the lug wrench to turn each nut <strong>counterclockwise</strong></li>
+                    <li>Apply downward force and use your body weight if necessary</li>
+                    <li>Loosen each nut about ¼ to ½ turn - don't remove them completely yet</li>
+                </ul>
+                <div class="key-points">
+                    <h3>Key Points:</h3>
+                    <p>Always loosen lug nuts while the car is still on the ground. This provides the necessary resistance to break the tight seal.</p>
+                </div>
                 <img src="lug_nuts_step.jpg" alt="Loosen Lug Nuts">
+                <div class="presenter-notes">
+                    <p><strong>Presenter Notes:</strong> Demonstrate proper body positioning for maximum leverage. Note that some lug nuts may have special locks requiring an adapter.</p>
+                </div>
             </div>
 
             <div class="step-container" id="step4">
                 <h2>Step 4: Jack Up the Car</h2>
-                <p>Position the jack under the vehicle’s frame and lift the car until the flat tire is off the ground.</p>
+                <p>Now it's time to raise the vehicle so you can remove the flat tire:</p>
+                <ul>
+                    <li>Locate the proper jacking point (consult your owner's manual)</li>
+                    <li>Position the jack securely under the vehicle's frame</li>
+                    <li>Raise the jack until it contacts the jacking point, ensuring it's stable</li>
+                    <li>Jack the car up until the flat tire is about 6 inches off the ground</li>
+                </ul>
+                <div class="key-points">
+                    <h3>Key Points:</h3>
+                    <p class="safety-tips">Never place any part of your body underneath the vehicle while it's supported only by a jack. The vehicle should be raised just enough to remove and replace the tire.</p>
+                </div>
                 <img src="jack_step.jpg" alt="Jack Up the Car">
+                <div class="presenter-notes">
+                    <p><strong>Presenter Notes:</strong> Emphasize the importance of finding the correct jacking point - using the wrong spot can damage the vehicle or cause the jack to slip.</p>
+                </div>
             </div>
 
             <div class="step-container" id="step5">
                 <h2>Step 5: Remove and Replace the Tire</h2>
-                <p>Completely remove the lug nuts, take off the flat tire, and replace it with the spare.</p>
+                <p>With the car safely lifted, you can now swap out the tires:</p>
+                <ul>
+                    <li>Completely remove all lug nuts (keep them in a safe place)</li>
+                    <li>Remove the flat tire by pulling it straight toward you</li>
+                    <li>Line up the spare tire with the wheel studs</li>
+                    <li>Push the spare tire all the way onto the wheel hub</li>
+                    <li>Hand-tighten the lug nuts as much as possible</li>
+                </ul>
+                <div class="key-points">
+                    <h3>Key Points:</h3>
+                    <p>When mounting the spare tire, align it carefully with the wheel studs to avoid cross-threading the lug nuts. The spare tire should sit flush against the hub.</p>
+                </div>
                 <img src="install_spare.jpg" alt="Replace the Tire">
+                <div class="presenter-notes">
+                    <p><strong>Presenter Notes:</strong> Demonstrate how heavy a tire can be and proper lifting technique. Note that temporary spare tires ("donuts") have speed and distance limitations.</p>
+                </div>
             </div>
 
             <div class="step-container" id="step6">
                 <h2>Step 6: Tighten Lug Nuts and Lower the Car</h2>
-                <p>Tighten the lug nuts in a crisscross pattern, lower the car, and ensure all nuts are secure.</p>
+                <p>The final step is securing everything and getting back on the road:</p>
+                <ul>
+                    <li>Tighten the lug nuts in a star or crisscross pattern (like tightening a lid)</li>
+                    <li>Lower the vehicle completely by reversing the jack operation</li>
+                    <li>Remove the jack from under the vehicle</li>
+                    <li>Use the lug wrench to fully tighten all lug nuts, maintaining the crisscross pattern</li>
+                    <li>Replace the hubcap if it fits the spare tire</li>
+                </ul>
+                <div class="key-points">
+                    <h3>Key Points:</h3>
+                    <p>Tightening in a crisscross pattern ensures even pressure. After driving about 50 miles, recheck the lug nuts to ensure they haven't loosened.</p>
+                </div>
                 <img src="tighten_nuts.jpg" alt="Tighten Lug Nuts">
+                <div class="presenter-notes">
+                    <p><strong>Presenter Notes:</strong> Illustrate the crisscross pattern on a diagram or with hand motions. Remind participants to have their tire repaired or replaced as soon as possible.</p>
+                </div>
             </div>
 
-            <button class="nav-arrow next" onclick="nextStep()">&#10095;</button>
+            <div class="tips-section" id="conclusion">
+                <h2>Important Tips & Conclusion</h2>
+                <ul>
+                    <li>Practice changing a tire in your driveway before you need to do it in an emergency</li>
+                    <li>Check your spare tire's pressure regularly (at least once a month)</li>
+                    <li>If your vehicle has a "donut" spare, remember it's designed for temporary use only:
+                        <ul>
+                            <li>Maximum speed: Usually 50 mph</li>
+                            <li>Maximum distance: About 50-70 miles</li>
+                        </ul>
+                    </li>
+                    <li>Consider keeping a tire repair kit, portable air compressor, and reflective vest in your vehicle</li>
+                    <li>Have your damaged tire repaired or replaced as soon as possible</li>
+                </ul>
+                <p><strong>Remember:</strong> Changing a tire safely is much more important than changing it quickly. Take your time and follow each step carefully.</p>
+                <p>Any questions?</p>
+                <div class="presenter-notes">
+                    <p><strong>Presenter Notes:</strong> Summarize the main points, invite questions, and if time permits, mention or demonstrate how to check if a tire needs replacement (tread depth check with a penny).</p>
+                </div>
+            </div>
         </div>
 
-        <script>
-            let currentStep = 1;
-            function showStep(step) {
-                document.querySelectorAll('.step-container').forEach(el => el.classList.remove('active'));
-                document.getElementById(`step${step}`).classList.add('active');
-                currentStep = step;
-            }
-            function nextStep() { if (currentStep < 6) showStep(currentStep + 1); }
-            function prevStep() { if (currentStep > 1) showStep(currentStep - 1); }
-        </script>
-
-    </div>
-<div class="container">
-        <h1>How to Change a Flat Tire</h1>
-        <p style="font-size: 1.3em;">Master the skill of changing a flat tire with this step-by-step guide.</p>
-
-        <div class="video-container">
-            <h2>Watch a Tutorial</h2>
-            <p>Follow along with this video to learn how to change a flat tire.</p>
-            <iframe width="100%" height="315" 
-                src="https://www.youtube.com/embed/YOUR_VIDEO_ID" 
-                title="How to Change a Flat Tire" 
-                frameborder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen>
-            </iframe>
+        <div class="navigation-controls">
+            <button class="control-button" id="prev-btn" onclick="prevSlide()" disabled>Previous</button>
+            <button class="control-button fullscreen-btn" id="fullscreen-btn" onclick="toggleFullscreen()">Fullscreen</button>
+            <button class="control-button" id="next-btn" onclick="nextSlide()">Next</button>
         </div>
-
-        <div class="quiz">
-            <h2>Test Your Knowledge</h2>
-            <p>Answer the following question to check your understanding.</p>
-
-            <form id="quiz-form">
-                <p><strong>What is the first step when changing a flat tire?</strong></p>
-                <label><input type="radio" name="question1" value="a"> A) Loosen the lug nuts</label><br>
-                <label><input type="radio" name="question1" value="b"> B) Pull over safely and turn on hazard lights</label><br>
-                <label><input type="radio" name="question1" value="c"> C) Jack up the car</label><br>
-                <label><input type="radio" name="question1" value="d"> D) Remove the flat tire</label><br>
-
-                <button type="button" onclick="checkQuiz()">Submit</button>
-            </form>
-
-            <p id="quiz-result"></p>
-        </div>
-
-        <script>
-            function checkQuiz() {
-                let answer = document.querySelector('input[name="question1"]:checked');
-                let resultText = document.getElementById("quiz-result");
-
-                if (!answer) {
-                    resultText.innerHTML = "Please select an answer.";
-                    resultText.style.color = "red";
-                    return;
-                }
-
-                if (answer.value === "b") {
-                    resultText.innerHTML = "Correct! Safety first is the most important step.";
-                    resultText.style.color = "green";
-                } else {
-                    resultText.innerHTML = "Incorrect. The first step is to pull over safely and turn on hazard lights.";
-                    resultText.style.color = "red";
-                }
-            }
-        </script>
-
     </div>
 
+    <script>
+        let currentSlide = 0;
+        const slides = ['intro', 'step1', 'step2', 'step3', 'step4', 'step5', 'step6', 'conclusion'];
+        const totalSlides = slides.length;
+
+        // Show initial slide and update indicators
+        function initializePresentation() {
+            showSlide(currentSlide);
+            updateSlideIndicator();
+            document.querySelectorAll('.presenter-notes').forEach(note => {
+                note.classList.add('hidden');
+            });
+        }
+
+        function showSlide(index) {
+            // Hide all slides
+            document.querySelectorAll('.intro, .step-container, .tips-section').forEach(slide => {
+                slide.classList.remove('active');
+            });
+            
+            // Show current slide
+            const currentSlideId = slides[index];
+            document.getElementById(currentSlideId).classList.add('active');
+            
+            // Update progress bar
+            const progressPercentage = ((index + 1) / totalSlides) * 100;
+            document.getElementById('progress-bar').style.width = `${progressPercentage}%`;
+            
+            // Update button states
+            document.getElementById('prev-btn').disabled = (index === 0);
+            document.getElementById('next-btn').disabled = (index === totalSlides - 1);
+            
+            // Update current slide index
+            currentSlide = index;
+            
+            // Update slide indicator
+            updateSlideIndicator();
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                showSlide(currentSlide + 1);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                showSlide(currentSlide - 1);
+            }
+        }
+
+        function updateSlideIndicator() {
+            document.getElementById('slide-indicator').textContent = `Slide ${currentSlide + 1} of ${totalSlides}`;
+        }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.log(`Error attempting to enable fullscreen: ${err.message}`);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        function togglePresenterNotes() {
+            document.querySelectorAll('.presenter-notes').forEach(note => {
+                note.classList.toggle('hidden');
+            });
+        }
+
+        // Initialize presentation on page load
+        window.onload = initializePresentation;
+
+        // Handle keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowRight' || event.key === ' ') {
+                nextSlide();
+            } else if (event.key === 'ArrowLeft') {
+                prevSlide();
+            } else if (event.key === 'f') {
+                toggleFullscreen();
+            } else if (event.key === 'n') {
+                togglePresenterNotes();
+            }
+        });
+    </script>
 </body>
 </html>
+

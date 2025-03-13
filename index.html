@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <title>How to Change a Flat Tire | Training and Quiz</title>
     <style>
         :root {
@@ -590,7 +593,72 @@
                 max-width: 100%;
             }
         }
-    </style>
+
+ .pdf-btn {
+        background: var(--secondary-color);
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 10px 15px;
+        border-radius: 6px;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        border: none;
+        transition: background-color 0.3s ease;
+    }
+    
+    .pdf-btn:hover {
+        background: var(--highlight-color);
+    }
+    
+    .pdf-btn::before {
+        content: "📄";
+    }
+    
+    .pdf-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+    
+    .pdf-message {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        text-align: center;
+        max-width: 80%;
+    }
+    
+    .pdf-message h3 {
+        color: var(--primary-color);
+        margin-top: 0;
+    }
+    
+    /* Animation for the loading indicator */
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    
+    .loading-spinner {
+        border: 5px solid #f3f3f3;
+        border-top: 5px solid var(--secondary-color);
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: 10px auto;
+    }
+</style>
 </head>
 <body>
 
@@ -732,7 +800,12 @@
             
             <button class="nav-arrow right-arrow" id="next-arrow" onclick="nextSlide()">&rarr;</button>
             <button class="fullscreen-btn" id="fullscreen-btn" onclick="toggleFullscreen()">Fullscreen</button>
-        </div>
+         </div>
+<div class="pdf-download-container" style="text-align: right; margin: 10px 0;">
+    <button class="control-button pdf-btn" id="download-pdf" onclick="downloadPDF()">
+        Download PDF Guide
+    </button>
+</div>
 
         <!-- Tips Section - Always Visible -->
         <div class="tips-section" id="conclusion">
@@ -1103,6 +1176,208 @@
         initializePresentation();
         initQuiz();
     };
+
+function downloadPDF() {
+        // Create and show the loading overlay
+        const overlay = document.createElement('div');
+        overlay.classList.add('pdf-overlay');
+        
+        const messageBox = document.createElement('div');
+        messageBox.classList.add('pdf-message');
+        
+        messageBox.innerHTML = `
+            <h3>Generating PDF Guide</h3>
+            <p>Please wait while we prepare your flat tire changing guide...</p>
+            <div class="loading-spinner"></div>
+        `;
+        
+        overlay.appendChild(messageBox);
+        document.body.appendChild(overlay);
+        
+        // Use timeout to allow the UI to update
+        setTimeout(() => {
+            try {
+                // Create a simpler PDF with just the key information
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF('p', 'mm', 'a4');
+                
+                // Add a title
+                doc.setFontSize(22);
+                doc.setTextColor(0, 47, 108); // primary-color
+                doc.text("Flat Tire Changing Guide", 105, 20, { align: 'center' });
+                
+                // Set font for body text
+                doc.setFontSize(12);
+                doc.setTextColor(0, 0, 0);
+                
+                // Add introduction
+                doc.text("INTRODUCTION", 20, 35);
+                doc.setFontSize(10);
+                doc.text("Knowing how to change a flat tire is an essential skill for all drivers. This guide", 20, 42);
+                doc.text("will walk you through the process step by step.", 20, 47);
+                
+                // Add the 6 steps
+                let yPosition = 55;
+                
+                // Step 1
+                doc.setFontSize(12);
+                doc.setTextColor(229, 126, 37); // secondary-color
+                doc.text("Step 1: Safety First", 20, yPosition);
+                doc.setFontSize(10);
+                doc.setTextColor(0, 0, 0);
+                yPosition += 7;
+                doc.text("• Pull over to a safe, flat location away from traffic", 25, yPosition);
+                yPosition += 5;
+                doc.text("• Turn on your hazard lights", 25, yPosition);
+                yPosition += 5;
+                doc.text("• Apply the parking brake", 25, yPosition);
+                yPosition += 5;
+                doc.text("• Place wheel wedges if available", 25, yPosition);
+                yPosition += 10;
+                
+                // Step 2
+                doc.setFontSize(12);
+                doc.setTextColor(229, 126, 37); // secondary-color
+                doc.text("Step 2: Gather Your Tools", 20, yPosition);
+                doc.setFontSize(10);
+                doc.setTextColor(0, 0, 0);
+                yPosition += 7;
+                doc.text("• Spare tire (check that it's properly inflated)", 25, yPosition);
+                yPosition += 5;
+                doc.text("• Jack (vehicle lifting device)", 25, yPosition);
+                yPosition += 5;
+                doc.text("• Lug wrench", 25, yPosition);
+                yPosition += 5;
+                doc.text("• Vehicle owner's manual", 25, yPosition);
+                yPosition += 10;
+                
+                // Step 3
+                doc.setFontSize(12);
+                doc.setTextColor(229, 126, 37); // secondary-color
+                doc.text("Step 3: Loosen the Lug Nuts", 20, yPosition);
+                doc.setFontSize(10);
+                doc.setTextColor(0, 0, 0);
+                yPosition += 7;
+                doc.text("• Remove any hubcap or wheel cover if present", 25, yPosition);
+                yPosition += 5;
+                doc.text("• Use the lug wrench to turn each nut counterclockwise", 25, yPosition);
+                yPosition += 5;
+                doc.text("• Loosen each nut about ¼ to ½ turn - don't remove them completely yet", 25, yPosition);
+                yPosition += 5;
+                doc.text("• Always loosen lug nuts while the car is still on the ground", 25, yPosition);
+                yPosition += 10;
+                
+                // Step 4
+                doc.setFontSize(12);
+                doc.setTextColor(229, 126, 37); // secondary-color
+                doc.text("Step 4: Jack Up the Car", 20, yPosition);
+                doc.setFontSize(10);
+                doc.setTextColor(0, 0, 0);
+                yPosition += 7;
+                doc.text("• Locate the proper jacking point (consult your owner's manual)", 25, yPosition);
+                yPosition += 5;
+                doc.text("• Position the jack securely under the vehicle's frame", 25, yPosition);
+                yPosition += 5;
+                doc.text("• Jack the car up until the flat tire is about 6 inches off the ground", 25, yPosition);
+                yPosition += 10;
+                
+                // Step 5
+                doc.setFontSize(12);
+                doc.setTextColor(229, 126, 37); // secondary-color
+                doc.text("Step 5: Remove and Replace the Tire", 20, yPosition);
+                doc.setFontSize(10);
+                doc.setTextColor(0, 0, 0);
+                yPosition += 7;
+                doc.text("• Completely remove all lug nuts (keep them in a safe place)", 25, yPosition);
+                yPosition += 5;
+                doc.text("• Remove the flat tire by pulling it straight toward you", 25, yPosition);
+                yPosition += 5;
+                doc.text("• Line up the spare tire with the wheel studs", 25, yPosition);
+                yPosition += 5;
+                doc.text("• Hand-tighten the lug nuts as much as possible", 25, yPosition);
+                yPosition += 10;
+                
+                // Step 6
+                doc.setFontSize(12);
+                doc.setTextColor(229, 126, 37); // secondary-color
+                doc.text("Step 6: Tighten Lug Nuts and Lower the Car", 20, yPosition);
+                doc.setFontSize(10);
+                doc.setTextColor(0, 0, 0);
+                yPosition += 7;
+                doc.text("• Tighten the lug nuts in a star or crisscross pattern", 25, yPosition);
+                yPosition += 5;
+                doc.text("• Lower the vehicle completely", 25, yPosition);
+                yPosition += 5;
+                doc.text("• Use the lug wrench to fully tighten all lug nuts in a crisscross pattern", 25, yPosition);
+                yPosition += 10;
+                
+                // Add new page
+                doc.addPage();
+                
+                // Add important tips on second page
+                doc.setFontSize(14);
+                doc.setTextColor(0, 47, 108); // primary-color
+                doc.text("Important Tips & Reminders", 105, 20, { align: 'center' });
+                
+                doc.setFontSize(10);
+                doc.setTextColor(0, 0, 0);
+                let tipPosition = 35;
+                
+                doc.text("• Practice changing a tire in your driveway before an emergency", 20, tipPosition);
+                tipPosition += 7;
+                doc.text("• Check your spare tire's pressure regularly (at least once a month)", 20, tipPosition);
+                tipPosition += 7;
+                doc.text("• If your vehicle has a 'donut' spare, it's designed for temporary use only:", 20, tipPosition);
+                tipPosition += 5;
+                doc.text("   - Maximum speed: Usually 50 mph", 20, tipPosition);
+                tipPosition += 5;
+                doc.text("   - Maximum distance: About 50-70 miles", 20, tipPosition);
+                tipPosition += 7;
+                doc.text("• Have your damaged tire repaired or replaced as soon as possible", 20, tipPosition);
+                tipPosition += 15;
+                
+                doc.setFontSize(12);
+                doc.setTextColor(76, 154, 42); // highlight-color
+                doc.text("SAFETY REMINDER:", 20, tipPosition);
+                tipPosition += 7;
+                doc.setFontSize(10);
+                doc.setTextColor(0, 0, 0);
+                doc.text("Changing a tire safely is much more important than changing it quickly.", 20, tipPosition);
+                tipPosition += 5;
+                doc.text("Take your time and follow each step carefully.", 20, tipPosition);
+                tipPosition += 15;
+                
+                // Add footer
+                doc.setFontSize(8);
+                doc.text("Flat Tire Changing Guide - For reference purposes only", 105, 280, { align: 'center' });
+                doc.text("Generated on " + new Date().toLocaleDateString(), 105, 285, { align: 'center' });
+                
+                // Save the PDF
+                doc.save('flat-tire-changing-guide.pdf');
+                
+                // Update the message to success
+                messageBox.innerHTML = `
+                    <h3>Success!</h3>
+                    <p>Your PDF guide has been downloaded.</p>
+                `;
+                
+                // Remove the overlay after a delay
+                setTimeout(() => {
+                    document.body.removeChild(overlay);
+                }, 2000);
+                
+            } catch (error) {
+                console.error("PDF generation error:", error);
+                
+                // Show error message
+                messageBox.innerHTML = `
+                    <h3>Something went wrong</h3>
+                    <p>We couldn't generate your PDF guide. Please try again later.</p>
+                    <button class="control-button" onclick="document.body.removeChild(this.parentNode.parentNode)">Close</button>
+                `;
+            }
+        }, 500);
+    }
 </script>
 </body>
 </html>

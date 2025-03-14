@@ -744,7 +744,7 @@
                         <h3>Key Points:</h3>
                         <p>Always loosen lug nuts while the car is still on the ground. This provides the necessary resistance to break the tight seal.</p>
                     </div>
-                    <img src="lug_nuts_step.jpg" alt="Loosen Lug Nuts">
+                    <img src="lug_nuts_step (2).jpg" alt="Loosen Lug Nuts">
                 </div>
 
                 <div class="step-container" id="step4">
@@ -832,12 +832,13 @@
     <h1>Flat Tire Changing Video Tutorial</h1>
     
     <div class="video-wrapper">
-        <!-- HTML5 Video Player for local MP4 file -->
-        <video width="100%" height="auto" controls poster="video-thumbnail.jpg" id="tire-tutorial-video">
-            <source src="tire-changing-tutorial.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        
+        <!-- YouTube Video Embed with your specific video -->
+        <iframe src="https://www.youtube.com/embed/cl1ZIKagm3s" 
+                title="How to Change a Flat Tire" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen></iframe>
+    </div>
             
     <div class="video-description">
         <h2>Watch the Complete Process</h2>
@@ -871,12 +872,25 @@
         text-align: center;
     }
     
-    .video-wrapper {
-        position: relative;
-        padding-bottom: 10px;
-        margin-bottom: 20px;
-    }
-    
+   .video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 10px;
+}
     .video-wrapper video {
         width: 100%;
         max-height: 500px;
